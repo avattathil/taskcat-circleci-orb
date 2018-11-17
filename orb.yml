@@ -1,6 +1,7 @@
 version: 2.1
 
 description: Installs taskcat cli
+name: taskcat
 
 executors:
   default:
@@ -12,12 +13,8 @@ executors:
         type: string
         default: "3.6"
 
-      ubuntu-release:
-        type: string
-        default: "xenial"
-
     docker:
-      - image: python:3-alpine
+      - image: circleci/python:latest
 
 commands:
   install:
@@ -25,8 +22,7 @@ commands:
       Install taskcat via pip
 
     steps:
-      - run: sudo apt-get update
-      - run: sudo apt-get install git
+      - run: echo "starting taskcat"
       - run:
           name: Install latest taskcat
           command: |
@@ -72,7 +68,7 @@ commands:
       - run:
           name: pull down the source (init release repo much be public)
           command: |
-            git clone github-repo-path --recursive 
+            git clone << parameters.github-repo-url >> --recursive 
 
       - run:
           name: Start taskcat run

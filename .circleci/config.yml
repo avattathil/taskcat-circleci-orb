@@ -1,9 +1,19 @@
 version: 2.1
 
 orbs:
-    hello: circleci/hello-build@0.0.7
+  taskcat: taskcat/taskcat-orb@dev:first
+
+jobs:
+  taskcat:
+    executor: taskcat/default
+    steps:
+      - checkout
+      - taskcat/install
+      - taskcat/configure:
+          github-repo-name: "quickstart-sample-project"
 
 workflows:
-    "Hello Workflow":
-        jobs:
-          - hello/hello-build
+  version: 2
+  taskcat:
+    jobs:
+      - taskcat
